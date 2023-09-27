@@ -67,6 +67,40 @@ If the validation passes, we should navigate the user to the next screen (which 
 # 88 - 91
 If not, we show a message asking the user to fill in the inputs ("Please fill input").
 
+# 111 - 112
+In this code, we are creating a new class called "HomePage" and extending it from "StatelessWidget". We receive an email from the previous page.
+
+# 117 - 136
+On the build method, we define the title of the page to be "Home Page" and its body contains a Text and ElevatedButton widget. The Text widget will display the email address passed from the previous screen. The ElevatedButton widget will navigate the user to the previous screen whenever it's pressed. We use Navigator.pop(context); to navigate to the previous screen.
 
 
-If you're facing any errors in viewing the UI, most of the time (almost 90%) it'll be with brackets. We'll be using a lot of brackets in Flutter which is often confusing for beginners. Make sure you have the proper opening and closing brackets. The Flutter app may terminate in the middle in case of any errors. In these cases, after applying the fix, press F5 to restart the app.
+
+# final
+The final keyword in Dart is used to create constants or objects that are immutable in nature. The only difference between the final and const keyword is that final is a runtime-constant, which in turn means that its value can be assigned at runtime instead of the compile-time that we had for the const keyword.
+
+# final vs const
+
+Final:
+
+"final" means single-assignment: a final variable or field must have an initializer. Once assigned a value, a final variable's value cannot be changed. final modifies variables.
+
+Const:
+
+"const" has a meaning that's a bit more complex and subtle in Dart. const modifies values. You can use it when creating collections, like const [1, 2, 3], and when constructing objects (instead of new) like const Point(2, 3). Here, const means that the object's entire deep state can be determined entirely at compile time and that the object will be frozen and completely immutable.
+
+Const objects have a couple of interesting properties and restrictions:
+
+They must be created from data that can be calculated at compile time. A const object does not have access to anything you would need to calculate at runtime. 1 + 2 is a valid const expression, but new DateTime.now() is not.
+
+They are deeply, transitively immutable. If you have a final field containing a collection, that collection can still be mutable. If you have a const collection, everything in it must also be const, recursively.
+
+They are canonicalized. This is sort of like string interning: for any given const value, a single const object will be created and re-used no matter how many times the const expression(s) are evaluated.
+
+So, what does this mean?
+Const:
+If the value you have is computed at runtime (new DateTime.now(), for example), you can not use a const for it. However, if the value is known at compile time (const a = 1;), then you should use const over final. There are 2 other large differences between const and final. Firstly, if you're using const inside a class, you have to declare it as static const rather than just const. Secondly, if you have a const collection, everything inside of that is in const. If you have a final collection, everything inside of that is not final.
+
+Final:
+final should be used over const if you don't know the value at compile time, and it will be calculated/grabbed at runtime. If you want an HTTP response that can't be changed, if you want to get something from a database, or if you want to read from a local file, use final. Anything that isn't known at compile time should be final over const.
+
+With all of that being said, both const and final cannot be reassigned, but fields in a final object, as long as they aren't const or final themselves, can be reassigned (unlike const).
